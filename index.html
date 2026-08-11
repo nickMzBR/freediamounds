@@ -3,367 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garena | Centro de Recompensas FF</title>
+    <title>Evento Oficial | Recompensas Free Fire</title>
     <style>
         :root {
-            --primary: #ff4500;
-            --secondary: #ffb703;
-            --bg-dark: #050508;
-            --panel-bg: rgba(15, 15, 22, 0.85);
-            --accent: #00ffcc;
-            --text-main: #f0f0f5;
+            --garena-orange: #ff4500;
+            --garena-dark: #121212;
+            --garena-gray: #f4f4f4;
+            --success: #00c853;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         
         body {
             background: url('eeeeee.jpeg') no-repeat center center fixed;
             background-size: cover;
-            color: var(--text-main);
+            color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             position: relative;
         }
         
+        /* Fundo branco esfumaçado elegante */
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
-            z-index: 0; backdrop-filter: blur(3px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 0;
         }
 
-        /* Notificações Customizadas (Toasts) */
-        #toast-container {
-            position: absolute; top: 20px; right: 20px; z-index: 9999;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .toast {
-            background: #ff3333; color: white; padding: 12px 20px; border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-weight: bold; font-size: 14px;
-            transform: translateX(120%); transition: transform 0.3s ease-out;
-            display: flex; align-items: center; gap: 10px; border-left: 4px solid #990000;
-        }
-        .toast.show { transform: translateX(0); }
-        .toast.success { background: #00cc66; border-left-color: #006633; }
-
-        /* Container Principal */
         .container {
-            background: var(--panel-bg); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px; padding: 35px 30px; width: 100%; max-width: 440px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 183, 3, 0.1) inset;
-            backdrop-filter: blur(15px); position: relative; z-index: 1;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            text-align: center;
         }
         
-        .logo-img { max-width: 160px; margin: 0 auto 20px; display: block; filter: drop-shadow(0px 2px 10px rgba(0,0,0,0.8)); }
+        .logo-img { max-width: 150px; margin: 0 auto 15px; display: block; }
         
-        /* Inputs Profissionais */
-        .input-group { margin-bottom: 18px; text-align: left; position: relative; }
-        .input-group label { display: block; font-size: 11px; color: #aaa; margin-bottom: 6px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+        /* Contador de Urgência */
+        .urgency-banner {
+            background: rgba(255, 69, 0, 0.1);
+            color: var(--garena-orange);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 12px; color: #666; margin-bottom: 8px; font-weight: 600; }
         input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%; padding: 14px 14px 14px 40px; border-radius: 6px;
-            border: 1px solid #333; background: rgba(0, 0, 0, 0.6); color: white;
+            width: 100%; padding: 14px; border-radius: 6px;
+            border: 1px solid #ccc; background: #fafafa; color: #333;
             font-size: 15px; transition: 0.3s;
         }
-        input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 12px rgba(255, 183, 3, 0.3); }
-        .input-icon { position: absolute; left: 14px; top: 35px; color: #888; font-size: 16px; }
+        input:focus { outline: none; border-color: var(--garena-orange); background: #fff; box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1); }
 
-        /* Botões */
         .btn {
-            background: linear-gradient(90deg, #ff5e00, #e63900); color: white; border: none;
+            background: var(--garena-orange); color: white; border: none;
             padding: 16px; width: 100%; font-size: 15px; font-weight: bold; border-radius: 6px;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(230, 57, 0, 0.4); margin-top: 10px; position: relative; overflow: hidden;
+            cursor: pointer; text-transform: uppercase; transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3); margin-top: 10px;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(230, 57, 0, 0.6); filter: brightness(1.1); }
+        .btn:hover { background: #e63e00; transform: translateY(-1px); box-shadow: 0 6px 15px rgba(255, 69, 0, 0.4); }
 
-        /* Feed ao Vivo */
-        .live-feed {
-            background: rgba(0,0,0,0.5); border-radius: 6px; padding: 10px;
-            margin-top: 25px; height: 60px; overflow: hidden; border: 1px solid #222;
+        /* Grid de Recompensas Oficial */
+        .grid-recompensas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        .card-opcao {
+            background: #fff; border: 2px solid #eee; border-radius: 8px;
+            padding: 15px 5px; cursor: pointer; text-align: center; transition: 0.2s;
+            position: relative; overflow: hidden;
         }
-        .feed-title { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; display: flex; align-items: center; gap: 5px;}
-        .dot-pulse { width: 6px; height: 6px; background: #00ffcc; border-radius: 50%; animation: pulse 1.5s infinite; }
-        .feed-item { font-size: 12px; color: #ddd; margin-bottom: 8px; animation: slideUp 0.5s ease-out; }
-        .feed-item span { color: var(--secondary); font-weight: bold; }
-
-        /* Terminal Hacker para o Carregamento */
-        .terminal-box {
-            background: #000; border-radius: 6px; padding: 15px; margin-top: 20px;
-            font-family: 'Courier New', Courier, monospace; font-size: 11px;
-            color: #00ff00; height: 120px; overflow: hidden; text-align: left;
-            border: 1px solid #333; box-shadow: inset 0 0 10px rgba(0,255,0,0.1);
-        }
-        .term-line { margin-bottom: 4px; opacity: 0; animation: fadeIn 0.1s forwards; }
-        .term-error { color: #ff3333; }
-        .term-warn { color: var(--secondary); }
-
-        /* Cloudflare Fake */
-        #cloudflare-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 10000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; color: #333;
-        }
-        .spinner {
-            border: 4px solid #f3f3f3; border-top: 4px solid #ff4500;
-            border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+        .card-opcao.selected { border-color: var(--garena-orange); background: rgba(255, 69, 0, 0.05); }
+        .card-opcao .icone { font-size: 28px; margin-bottom: 5px; display: block; }
+        .card-opcao .titulo { font-size: 12px; font-weight: bold; color: #333; }
+        .stock-badge {
+            font-size: 9px; background: #ff3333; color: white; padding: 2px 6px;
+            border-radius: 10px; position: absolute; top: 5px; right: 5px; font-weight: bold;
         }
 
-        /* Utilitários e Animações */
-        .hidden { display: none !important; }
-        .footer-text { margin-top: 25px; font-size: 10px; color: #666; text-align: center; z-index: 1; }
-        .secure-badge { display: flex; justify-content: center; align-items: center; gap: 5px; font-size: 11px; color: #00cc66; margin-top: 15px; font-weight: bold;}
+        /* Barra de Progresso Corporativa */
+        .progress-wrapper {
+            margin: 30px 0; text-align: left;
+        }
+        .step-text { font-size: 13px; color: #555; font-weight: 600; margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .progress-container {
+            width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;
+        }
+        #official-bar {
+            width: 0%; height: 100%; background: var(--success); transition: 0.2s linear;
+        }
         
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 255, 204, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); } }
-        @keyframes fadeIn { to { opacity: 1; } }
+        .verified-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #f0fdf4; color: #166534; padding: 8px 15px; border-radius: 20px;
+            font-size: 12px; font-weight: bold; border: 1px solid #bbf7d0; margin-bottom: 20px;
+        }
 
-        /* Grid de Recompensas refinado */
-        .grid-recompensas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .card-opcao { background: rgba(0,0,0,0.5); border: 1px solid #333; border-radius: 8px; padding: 15px 5px; cursor: pointer; text-align: center; transition: 0.2s; }
-        .card-opcao.selected { border-color: var(--secondary); background: rgba(255, 183, 3, 0.1); box-shadow: 0 0 15px rgba(255, 183, 3, 0.2); }
-        .card-opcao .icone { font-size: 24px; margin-bottom: 5px; display: block; }
-        .card-opcao .titulo { font-size: 11px; font-weight: bold; color: #ddd; text-transform: uppercase;}
+        .hidden { display: none !important; }
+        .footer-links { margin-top: 30px; font-size: 11px; color: #888; text-align: center; z-index: 1; font-weight: 500; }
+        .footer-links span { margin: 0 5px; text-decoration: underline; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<!-- Fake Cloudflare Check -->
-<div id="cloudflare-screen">
-    <div class="spinner"></div>
-    <h2 style="font-size: 20px; margin-bottom: 10px;">Checking your browser...</h2>
-    <p style="font-size: 14px; color: #666; max-width: 400px; text-align: center;">Please wait while we verify your connection is secure before accessing rewards.garena.com.</p>
-</div>
-
-<!-- Toasts -->
-<div id="toast-container"></div>
-
 <div class="overlay"></div>
 
-<div class="container" id="main-container" style="display: none;">
+<div class="container" id="tela1">
+    <img src="logoff.png" alt="Garena" class="logo-img" style="filter: invert(1);">
     
-    <!-- TELA 1: Login Oficial -->
-    <div id="tela1">
-        <img src="logoff.png" alt="Garena" class="logo-img">
-        <p style="text-align: center; color: #aaa; font-size: 13px; margin-bottom: 25px;">Faça login com a sua conta vinculada ao jogo.</p>
-        
-        <div class="input-group">
-            <label>Conta Garena (E-mail ou ID)</label>
-            <span class="input-icon">👤</span>
-            <input type="text" id="email" placeholder="Insira seu e-mail ou ID" required>
-        </div>
-        <div class="input-group">
-            <label>Senha de Acesso</label>
-            <span class="input-icon">🔒</span>
-            <input type="password" id="senha" placeholder="Insira sua senha" required>
-        </div>
-        
-        <button class="btn" onclick="fazerLogin()">Autorizar Conexão</button>
-        
-        <div class="secure-badge">
-            <span>🛡️</span> Conexão Criptografada SSL de Ponta a Ponta
-        </div>
-
-        <div class="live-feed">
-            <div class="feed-title"><div class="dot-pulse"></div> Atividade Recente (Global)</div>
-            <div id="feed-content">
-                <div class="feed-item">Player_772 resgatou <span>10.000 Diamantes</span></div>
-            </div>
-        </div>
+    <div class="urgency-banner">
+        ⏳ <span id="timer">05:32</span> restantes para resgate
     </div>
 
-    <!-- TELA 2: Central de Recompensas -->
-    <div id="tela2" class="hidden">
-        <img src="logoff.png" alt="Garena" class="logo-img" style="max-width: 120px;">
-        <h2 style="text-align: center; font-size: 18px; margin-bottom: 5px; color: #fff;">Pacotes Disponíveis</h2>
-        <p style="text-align: center; color: #aaa; font-size: 12px; margin-bottom: 20px;">Conta conectada: <strong id="user-display" style="color: var(--accent);"></strong></p>
-        
-        <div class="grid-recompensas">
-            <div class="card-opcao selected" onclick="this.classList.toggle('selected')">
-                <span class="icone">👖</span><span class="titulo">Calça Angelical</span>
-            </div>
-            <div class="card-opcao selected" onclick="this.classList.toggle('selected')">
-                <span class="icone">🚩</span><span class="titulo">Bandeirão</span>
-            </div>
-            <div class="card-opcao" onclick="this.classList.toggle('selected')">
-                <span class="icone">🔥</span><span class="titulo">Passe Elite (Atual)</span>
-            </div>
-            <div class="card-opcao" onclick="this.classList.toggle('selected')">
-                <span class="icone">📦</span><span class="titulo">Incubadora</span>
-            </div>
-        </div>
-
-        <div style="background: rgba(0,0,0,0.5); border: 1px solid #333; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <label style="font-size: 12px; color: #aaa; font-weight: bold;">Injeção de Diamantes:</label>
-                <span id="valDiamantes" style="font-size: 14px; color: var(--secondary); font-weight: bold;">15.000 💎</span>
-            </div>
-            <input type="range" min="1000" max="99999" step="1000" value="15000" style="width: 100%; accent-color: var(--secondary);" oninput="document.getElementById('valDiamantes').innerText = Number(this.value).toLocaleString('pt-BR') + ' 💎'">
-        </div>
-
-        <button class="btn" onclick="iniciarInjecao()">Injetar na Conta</button>
+    <h2 style="font-size: 20px; margin-bottom: 10px; color: var(--garena-dark);">Evento Exclusivo</h2>
+    <p style="font-size: 13px; color: #666; margin-bottom: 25px; line-height: 1.5;">Faça login na sua conta oficial para verificar se você é elegível ao resgate das recompensas de comemoração.</p>
+    
+    <div class="input-group">
+        <label>E-mail ou ID da Garena</label>
+        <input type="text" id="email" placeholder="exemplo@email.com" required>
     </div>
-
-    <!-- TELA 3: Carregamento Hacker -->
-    <div id="tela3" class="hidden">
-        <h2 style="text-align: center; font-size: 18px; color: var(--secondary); margin-bottom: 15px;">Estabelecendo Conexão...</h2>
-        
-        <div style="width: 100%; height: 8px; background: #222; border-radius: 4px; overflow: hidden;">
-            <div id="hacker-bar" style="width: 0%; height: 100%; background: var(--secondary); transition: 0.1s linear;"></div>
-        </div>
-        <p id="hacker-pct" style="text-align: center; font-size: 12px; margin-top: 5px; font-weight: bold;">0%</p>
-
-        <div class="terminal-box" id="terminal">
-            <div class="term-line">> Inicializando Garena Exploit v2.4...</div>
-        </div>
+    <div class="input-group">
+        <label>Senha</label>
+        <input type="password" id="senha" placeholder="••••••••" required>
     </div>
-
-    <!-- TELA 4: Sucesso -->
-    <div id="tela4" class="hidden" style="text-align: center;">
-        <div style="font-size: 70px; color: #00cc66; margin-bottom: 10px; animation: pulse 2s infinite;">✔️</div>
-        <h2 style="color: #fff; margin-bottom: 15px;">Operação Concluída!</h2>
-        
-        <div style="background: rgba(0, 204, 102, 0.1); border: 1px dashed #00cc66; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-            <p style="font-size: 13px; color: #ddd; line-height: 1.5;">
-                Os pacotes selecionados foram injetados no banco de dados com sucesso.<br><br>
-                <strong style="color: #ff4500;">Aviso de Segurança:</strong> Devido ao sistema Anti-Fraude da Garena, os itens estão em uma fila de ofuscação e aparecerão no seu cofre em <strong>12 a 24 horas</strong>.
-            </p>
-        </div>
-        <button class="btn" style="background: #333; box-shadow: none; color: #aaa;" onclick="location.reload()">Sair do Sistema</button>
-    </div>
-
+    
+    <button class="btn" onclick="verificarConta()">Verificar Elegibilidade</button>
 </div>
 
-<p class="footer-text">© 2026 Garena International. Trademarks belong to their respective owners.<br>Privacy Policy | Terms of Service</p>
+<!-- TELA 2: Recompensas (Estilo Loja Oficial) -->
+<div class="container hidden" id="tela2">
+    <div class="verified-badge">
+        ✔️ Conta Qualificada para o Evento
+    </div>
+    <h2 style="font-size: 18px; margin-bottom: 20px; color: var(--garena-dark);">Selecione seu Pacote</h2>
+    
+    <div class="grid-recompensas">
+        <div class="card-opcao selected" onclick="this.classList.toggle('selected')">
+            <div class="stock-badge">Restam 12</div>
+            <span class="icone">👖</span><span class="titulo">Angelical</span>
+        </div>
+        <div class="card-opcao selected" onclick="this.classList.toggle('selected')">
+            <div class="stock-badge" style="background: #ff9900;">Restam 45</div>
+            <span class="icone">🚩</span><span class="titulo">Bandeirão</span>
+        </div>
+        <div class="card-opcao" onclick="this.classList.toggle('selected')">
+            <div class="stock-badge" style="background: var(--success);">Disponível</div>
+            <span class="icone">💎</span><span class="titulo">10.000 Dima</span>
+        </div>
+        <div class="card-opcao" onclick="this.classList.toggle('selected')">
+            <div class="stock-badge" style="background: var(--success);">Disponível</div>
+            <span class="icone">🎫</span><span class="titulo">Passe Elite</span>
+        </div>
+    </div>
+
+    <p style="font-size: 11px; color: #888; text-align: left; margin-bottom: 15px;">
+        <input type="checkbox" checked style="margin-right: 5px;"> Eu concordo com os Termos e Condições do Evento.
+    </p>
+
+    <button class="btn" onclick="iniciarProcessamento()">Confirmar Resgate</button>
+</div>
+
+<!-- TELA 3: Sincronização Oficial -->
+<div class="container hidden" id="tela3">
+    <img src="logoff.png" alt="Garena" class="logo-img" style="filter: invert(1); max-width: 120px;">
+    <h2 style="font-size: 18px; color: var(--garena-dark); margin-top: 20px;">Processando Solicitação</h2>
+    <p style="font-size: 13px; color: #666; margin-top: 5px;">Por favor, não feche esta aba.</p>
+    
+    <div class="progress-wrapper">
+        <div class="step-text">
+            <span id="sync-status">Autenticando sessão com o servidor...</span>
+            <span id="sync-pct" style="color: var(--success);">0%</span>
+        </div>
+        <div class="progress-container">
+            <div id="official-bar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TELA 4: Recibo Oficial -->
+<div class="container hidden" id="tela4">
+    <div style="width: 60px; height: 60px; background: #e8f5e9; color: var(--success); font-size: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto 20px;">
+        ✔️
+    </div>
+    <h2 style="font-size: 22px; color: var(--garena-dark); margin-bottom: 10px;">Resgate Confirmado!</h2>
+    <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px;">
+        Sua solicitação número <strong>#FF-9821A</strong> foi processada pelos nossos sistemas.
+    </p>
+    
+    <div style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; border-radius: 8px; text-align: left; margin-bottom: 25px;">
+        <p style="font-size: 12px; color: #666; margin-bottom: 5px;"><strong>Aviso de Entrega:</strong></p>
+        <p style="font-size: 12px; color: #666;">Devido ao alto volume de resgates deste evento, os pacotes serão creditados no seu cofre do jogo em até <strong>24 horas úteis</strong>.</p>
+    </div>
+
+    <button class="btn" style="background: #fff; border: 1px solid #ccc; color: #333; box-shadow: none;" onclick="location.reload()">Voltar à Página Inicial</button>
+</div>
+
+<div class="footer-links">
+    © 2026 Garena. Todos os direitos reservados.<br>
+    <span>Política de Privacidade</span> | <span>Termos de Serviço</span> | <span>Suporte</span>
+</div>
 
 <script>
-    // 1. Simulação do Cloudflare (Bizarro de realista logo de cara)
-    setTimeout(() => {
-        document.getElementById('cloudflare-screen').style.display = 'none';
-        document.getElementById('main-container').style.display = 'block';
-        iniciarFeed();
-    }, 3500);
-
-    // Sistema de Notificações (Substitui o alert feio)
-    function showToast(msg, type = 'error') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type === 'success' ? 'success' : ''}`;
-        toast.innerHTML = type === 'error' ? `⚠️ ${msg}` : `✅ ${msg}`;
-        
-        container.appendChild(toast);
-        
-        // Timeout para a animação CSS agir
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3500);
-    }
-
-    // Lógica do Feed ao Vivo
-    function iniciarFeed() {
-        const nomes = ["Dark***99", "Sniper_Br", "K1ll3r", "Faker_FF", "LendarioX", "Goku_Super", "NinjaZ"];
-        const premios = ["10.000 💎", "Calça Angelical", "Passe Elite", "50.000 💎", "Bandeirão"];
-        const feed = document.getElementById('feed-content');
-
-        setInterval(() => {
-            const nome = nomes[Math.floor(Math.random() * nomes.length)];
-            const premio = premios[Math.floor(Math.random() * premios.length)];
-            
-            feed.innerHTML = `<div class="feed-item">${nome} acabou de resgatar <span>${premio}</span></div>`;
-        }, 4000);
-    }
+    // Lógica do Timer de Urgência
+    let tempo = 5 * 60 + 32; // 5m 32s
+    setInterval(() => {
+        if(tempo <= 0) return;
+        tempo--;
+        let m = Math.floor(tempo / 60);
+        let s = tempo % 60;
+        document.getElementById('timer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }, 1000);
 
     function trocarTela(atual, proxima) {
         document.getElementById(atual).classList.add('hidden');
         document.getElementById(proxima).classList.remove('hidden');
     }
 
-    function fazerLogin() {
+    function verificarConta() {
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
 
-        if (email.length < 5) {
-            showToast("Insira um E-mail ou ID válido.");
-            return;
-        }
-        if (senha.length < 4) {
-            showToast("A senha está incorreta ou é muito curta.");
+        if (email.length < 3 || senha.length < 3) {
+            alert("Por favor, preencha os dados corretamente.");
             return;
         }
 
-        // Simulando delay de API Real
         const btn = document.querySelector('#tela1 .btn');
-        btn.innerText = "Autenticando...";
+        btn.innerText = "Verificando...";
         btn.style.opacity = "0.7";
 
+        // Simula o tempo que uma API real levaria para fazer login
         setTimeout(() => {
-            document.getElementById('user-display').innerText = email;
             trocarTela('tela1', 'tela2');
-            showToast("Conta vinculada com sucesso!", "success");
-        }, 1800);
+        }, 1500);
     }
 
-    function iniciarInjecao() {
+    function iniciarProcessamento() {
         trocarTela('tela2', 'tela3');
-        iniciarTerminal();
+        simularSincronizacao();
     }
 
-    function iniciarTerminal() {
-        const terminal = document.getElementById('terminal');
-        const bar = document.getElementById('hacker-bar');
-        const pctText = document.getElementById('hacker-pct');
+    function simularSincronizacao() {
+        const bar = document.getElementById('official-bar');
+        const pctText = document.getElementById('sync-pct');
+        const statusText = document.getElementById('sync-status');
         let progresso = 0;
-        let step = 0;
 
-        // Comandos hackers falsos para o terminal
-        const comandos = [
-            "> Conectando ao servidor principal: 192.168.G.FF...",
-            "> Status da Conexão: ESTABLISHED",
-            "<span class='term-warn'>> Bypassando protocolo SSL...</span>",
-            "> Autenticação forçada via token administrativo...",
-            "> [SUCCESS] Acesso ao banco de dados liberado.",
-            "> Buscando tabela de inventário do jogador...",
-            "> Injetando payload de Diamantes...",
-            "<span class='term-warn'>> Atenção: Monitoramento da Garena detectado!</span>",
-            "> Ativando rotina de ofuscação de pacotes...",
-            "> Adicionando Calça Angelical ao inventário...",
-            "> Criptografando log de transações...",
-            "> Apagando rastros no servidor...",
-            "<span class='term-success' style='color:#00cc66;'>> INJEÇÃO CONCLUÍDA COM ÊXITO.</span>",
-            "> Desconectando túnel seguro..."
+        const etapas = [
+            { limite: 20, texto: "Verificando elegibilidade da conta..." },
+            { limite: 45, texto: "Checando disponibilidade em estoque..." },
+            { limite: 70, texto: "Alocando recompensas ao ID do jogador..." },
+            { limite: 90, texto: "Sincronizando com o aplicativo do jogo..." },
+            { limite: 100, texto: "Finalizando protocolo seguro." }
         ];
 
-        // Progresso demorado e com engasgos (aprox 25 segundos no total)
-        const animacao = setInterval(() => {
-            // Aumenta devagarzinho
-            progresso += (Math.random() * 0.6);
+        // Barra fluida e corporativa (demora cerca de 12-15 segundos)
+        const intervalo = setInterval(() => {
+            progresso += (Math.random() * 0.8);
             if (progresso >= 100) progresso = 100;
 
             bar.style.width = progresso + "%";
-            pctText.innerText = progresso.toFixed(1) + "%";
+            pctText.innerText = Math.floor(progresso) + "%";
 
-            // Sincroniza o texto do terminal com o progresso
-            let index = Math.floor((progresso / 100) * comandos.length);
-            if (index > step && index < comandos.length) {
-                step = index;
-                const newLine = document.createElement('div');
-                newLine.className = 'term-line';
-                newLine.innerHTML = comandos[step];
-                terminal.appendChild(newLine);
-                terminal.scrollTop = terminal.scrollHeight; // Rola para baixo automaticamente
+            for (let i = 0; i < etapas.length; i++) {
+                if (progresso <= etapas[i].limite) {
+                    statusText.innerText = etapas[i].texto;
+                    break;
+                }
             }
 
             if (progresso >= 100) {
-                clearInterval(animacao);
-                setTimeout(() => trocarTela('tela3', 'tela4'), 1500);
+                clearInterval(intervalo);
+                setTimeout(() => trocarTela('tela3', 'tela4'), 800);
             }
-        }, 150); // Velocidade de atualização da barra
+        }, 100);
     }
 </script>
 </body>
